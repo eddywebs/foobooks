@@ -29,6 +29,11 @@ Route::get('/data', function(){
 	return $library->books;
 });
 
+Route::get('/sandbox', function(){
+
+	return "sandbox page do whatever";
+});
+
 Route::get('/list/{format?}', function($format=null){
 
 	if(strtolower($format=='json')) return "json format here";
@@ -42,6 +47,24 @@ Route::post('/add', function(){
 
 });
 
+Route::get('mysql-test', function() {
+
+    # Print environment
+    echo 'Environment: '.App::environment().'<br>';
+
+    # Use the DB component to select all the databases
+    $results = DB::select('SHOW DATABASES;');
+
+    # If the "Pre" package is not installed, you should output using print_r instead
+    echo Pre::render($results);
+
+});
+
+Route::get('/get-environment',function() {
+
+    echo "Environment: ".App::environment();
+
+});
 
 Route::get('/hello', function(){
 	return "hello world";
