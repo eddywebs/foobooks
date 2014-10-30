@@ -42,8 +42,43 @@ Route::get('/list/{format?}', function($format=null){
 	return View::make('list')->with('foo', 'adi');//"list all the books for $format";
 });
 
-Route::post('/add', function(){
-	return "add post";
+Route::get('/add', function(){
+	$book = new Book();
+
+	$book->title = "Hackers and painters";
+	$book->author="Paul Graham";
+	$book->save();
+
+	return "created a book :)";
+});
+
+Route::get('/read', function(){
+
+	$books = Book::where('author', 'LIKE', '%paul%')->get(); //Book::all();
+
+	return Paste\Pre::r($books);
+
+});
+
+Route::get('/update', function() {
+
+    # First get a book to update
+    $book = Book::where('author', 'LIKE', '%paul%')->first();
+
+    # If we found the book, update it
+    if($book) {
+
+        # Give it a different title
+        $book->title = 'The Really Great Gatsby';
+
+        # Save the changes
+        $book->save();
+
+        return "Update complete; check the database to see if your update worked...";
+    }
+    else {
+        return "Book not found, can't update.";
+    }
 
 });
 
