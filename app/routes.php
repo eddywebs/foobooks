@@ -17,6 +17,12 @@ Route::get('/', function()
 	return View::make('_master');
 });
 
+
+/* routes using controller*/
+
+Route::controller('user', 'UserController'); //implicit route
+/* */
+
 Route::get('/books/{genre}', function($genre)
 {
     return "Books in the {$genre} category.";
